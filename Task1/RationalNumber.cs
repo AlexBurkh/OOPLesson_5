@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task1
 {
-    internal class RationalNumber
+    public class RationalNumber
     {
         #region Конструкторы
         public RationalNumber(Int32 numerator, UInt32 denominator)
@@ -210,7 +210,7 @@ namespace Task1
         #endregion
 
         #region Вспомогательные
-        private static void BringToCommonDenominator(RationalNumber a, RationalNumber b)
+        protected static void BringToCommonDenominator(RationalNumber a, RationalNumber b)
         {
             UInt32 mulForA = b.Denominator;
             UInt32 mulForB = a.Denominator;
@@ -220,13 +220,13 @@ namespace Task1
             b.Numerator *= (Int32)mulForB;
             b.Denominator *= mulForB;
         }
-        private static void SimplifyRationalNumber(RationalNumber a)
+        protected static void SimplifyRationalNumber(RationalNumber a)
         {
             Int32 gcd = GCD(a.Numerator, (Int32) a.Denominator);
             a.Numerator /= gcd;
             a.Denominator /= (UInt32) gcd;
         }
-        private static Int32 GCD(Int32 firstNum, Int32 secondNum)
+        protected static Int32 GCD(Int32 firstNum, Int32 secondNum)
         {
             Int32 first = Math.Abs(firstNum);
             Int32 second = Math.Abs(secondNum);
