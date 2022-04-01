@@ -81,7 +81,9 @@ namespace Task1
             {
                 BringToCommonDenominator(a, b);
             }
-            return new RationalNumber(a.Numerator + b.Numerator, a.Denominator);
+            var newNum = new RationalNumber(a.Numerator + b.Numerator, a.Denominator);
+            ReduceRationalNumber(newNum);
+            return newNum;
         }
         public static RationalNumber operator -(RationalNumber a, RationalNumber b)
         {
@@ -89,22 +91,37 @@ namespace Task1
             {
                 BringToCommonDenominator(a, b);
             }
-            return new RationalNumber(a.Numerator - b.Numerator, a.Denominator);
+            var newNum = new RationalNumber(a.Numerator - b.Numerator, a.Denominator);
+            ReduceRationalNumber(newNum);
+            return newNum;
         }
         public static RationalNumber operator *(RationalNumber a, RationalNumber b)
         {
-            return new RationalNumber(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
+            Int32 newNumerator = a.Numerator * b.Numerator;
+            UInt32 newDenominator = a.Denominator * b.Denominator;
+            var newNum = new RationalNumber(newNumerator, newDenominator);
+            ReduceRationalNumber(newNum);
+            return newNum;
         }
         public static RationalNumber operator /(RationalNumber a, RationalNumber b)
         {
-            if (a.Numerator > 0 && b.Numerator > 0)
+            Int32 temp;
+            Int32 newNumerator;
+            UInt32 newDenominator;
+            if (b.Numerator < 0)
             {
-                return new RationalNumber(a.Numerator * (Int32) b.Denominator, a.Denominator * (UInt32) b.Numerator);
+                temp = b.Numerator * -1;
+                newNumerator = a.Numerator * (Int32)b.Denominator * -1;
+                newDenominator = (UInt32)temp * a.Denominator;
             }
             else
             {
-                return new RationalNumber(a.Numerator * (Int32)b.Denominator * -1, a.Denominator * (UInt32)(b.Numerator * -1));
+                newNumerator = a.Numerator * (Int32)b.Denominator;
+                newDenominator = a.Denominator * (UInt32)b.Numerator;
             }
+            var newNum = new RationalNumber(newNumerator, newDenominator);
+            ReduceRationalNumber(newNum);
+            return newNum;
         }
 /*        public static RationalNumber operator %(RationalNumber a, RationalNumber b)
         {
@@ -116,28 +133,32 @@ namespace Task1
         {
             var first = a;
             var second = b;
-            BringToCommonDenominator(first, second);
+            if (a.Denominator != b.Denominator)
+                BringToCommonDenominator(first, second);
             return first.Numerator > second.Numerator;
         }
         public static bool operator <(RationalNumber a, RationalNumber b)
         {
             var first = a;
             var second = b;
-            BringToCommonDenominator(first, second);
+            if (a.Denominator != b.Denominator)
+                BringToCommonDenominator(first, second);
             return first.Numerator < second.Numerator;
         }
         public static bool operator >=(RationalNumber a, RationalNumber b)
         {
             var first = a;
             var second = b;
-            BringToCommonDenominator(first, second);
+            if (first.Denominator != second.Denominator)
+                BringToCommonDenominator(first, second);
             return (first.Numerator > second.Numerator) || (first.Numerator == second.Numerator);
         }
         public static bool operator <=(RationalNumber a, RationalNumber b)
         {
             var first = a;
             var second = b;
-            BringToCommonDenominator(first, second);
+            if (first.Denominator != second.Denominator)
+                BringToCommonDenominator(first, second);
             return (first.Numerator < second.Numerator) || (first.Numerator == second.Numerator);
         }
         public static bool operator ==(RationalNumber a, RationalNumber b)
@@ -161,6 +182,24 @@ namespace Task1
             a.Denominator *= mulForA;
             b.Numerator *= (Int32)mulForB;
             b.Denominator *= mulForB;
+        }
+        private static void ReduceRationalNumber(RationalNumber a)
+        {
+            Int32 gcd = GCD(Math.Abs(a.Numerator), Math.Abs((Int32) a.Denominator));
+            a.Numerator /= gcd;
+            a.Denominator /= (UInt32) gcd;
+        }
+        private static Int32 GCD(Int32 firstNum, Int32 secondNum)
+        {
+            Int32 gcd = 1;
+            for (int i = 1; i < (firstNum * secondNum + 1); i++)
+            {
+                if ((firstNum % i == 0) && (secondNum % i == 0))
+                {
+                    gcd = i;
+                }
+            }
+            return gcd;
         }
         #endregion
         #endregion
