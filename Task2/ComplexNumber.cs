@@ -31,7 +31,7 @@ namespace Task2
         #region Override
         public override string ToString()
         {
-            return $"{_real} + {_complex}i";
+            return $"{_real} + {_complex}*i";
         }
         public override bool Equals(object obj)
         {

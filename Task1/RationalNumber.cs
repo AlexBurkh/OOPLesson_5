@@ -53,6 +53,10 @@ namespace Task1
                     return $"{integer} {fractial}/{Denominator}";
                 return $"{integer}";
             }
+            if (Math.Abs(Numerator) == Math.Abs((Int32) Denominator))
+            {
+                return $"{Numerator}";
+            }
             return $"{Numerator}/{Denominator}";
         }
         public override bool Equals(object obj)
