@@ -1,13 +1,15 @@
 ﻿using System;
 
-namespace Task1
+using Task1;
+
+namespace Task2
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            RationalNumber a = new RationalNumber(2, 5);
-            Single b = 0.1f;
+            ComplexNumber a = new ComplexNumber(new RationalNumber(5, 2), new RationalNumber(-3, 4));
+            ComplexNumber b = new ComplexNumber(new RationalNumber(3, 2), new RationalNumber(-1, 4));
 
             Console.WriteLine($"a: {a}");
             Console.WriteLine($"b: {b}");
@@ -15,13 +17,9 @@ namespace Task1
             Console.WriteLine($"a - b: {a - b}");
             Console.WriteLine($"b - a: {b - a}");
             Console.WriteLine($"a * b: {a * b}");
-            Console.WriteLine($"a / b: {a / b}");
-            Console.WriteLine($"b / a: {b / a}");
             Console.WriteLine();
-            Console.WriteLine($"a < b: {a < b}");
-            Console.WriteLine($"a > b: {a > b}");
-            Console.WriteLine($"a <= b: {a <= b}");
-            Console.WriteLine($"a >= b: {a >= b}");
+            Console.WriteLine($"a == b: {a == b}");
+            Console.WriteLine($"a != b: {a != b}");
         }
     }
 }
